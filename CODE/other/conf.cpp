@@ -28,7 +28,7 @@ void analyzeConf(const std::string &  marco,const std::string & in)
     if(marco == "DEFAULT_PATH")
     {
         start::default_path = value;
-        LOG(INFO) << "read defautl_path :" << start::default_path;
+        LOG(INFO) << "read defautl_path : \"" << start::default_path << "\"";
     }
 }
 

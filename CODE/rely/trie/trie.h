@@ -14,7 +14,7 @@ struct node
 typedef struct node node;
 
 class Trie{
-
+ 
 public:
    Trie():root(new node){};
 	void insert(const std::string & s );
