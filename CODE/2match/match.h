@@ -1,16 +1,14 @@
 #ifndef _match_h_
 #define _match_h_
 
-#include <vector>
-#include <string>
-
-class Match{
+#include "../args/MatchData.h"
+class Match : private MatchData{
 
 public:
-    //不要传入match的构造，无法作为外部引用
-    
+	Match(MatchData && _data):MatchData(std::move(_data))
+    {}
 private:
-    std::vector<std::string> match;
+
 };
 
 #endif

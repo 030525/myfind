@@ -1,9 +1,7 @@
 #include "rely/cxxopts/include/cxxopts.hpp"
 #include "rely/log/easylogging++.h"
-#include "rely/trie/trie.h"
-#include "rely/time/time.h"
+#include "args/argsManager.h"
 #include "0menu/menu.h"
-#include "1path/path.h"
 
 
 using vs = std::vector<std::string>;
@@ -11,41 +9,41 @@ const int NO_LIMIT = -1;
 
 namespace start{
     //当path为空就从default_path开始找
-    vs path;
-    std::string default_path;
+    extern vs path;
+    extern std::string default_path;
         
 }
 
 namespace match{
     //一开始默认严格匹配
     //不给名字或者content就报错
-    vs name;
+    extern vs name;
     //vs content;
-    bool case_sensitive = true;
+    extern bool case_sensitive;
 }
 
 namespace filter{
-    int size = NO_LIMIT;//上限
-    int depth = NO_LIMIT; 
-    vs type;//directory,file,exe,script
+    extern int size;//上限
+    extern int depth; 
+    extern vs type;//directory,file,exe,script
     
-    vs skip;//默认无
-    bool find_hidden = false;
+    extern vs skip;//默认无
+    extern bool find_hidden;
 
 }
 
 namespace end{
     //time size type...
-    int sort;
-    std::string output_path;
-    bool height_light = true;
+    extern int sort;
+    extern std::string output_path;
+    extern bool height_light;
 }
 
 namespace thread{
-    size_t size = 16;
+    extern size_t size;
 }
 
-Path _path;
+Argsmanager args;
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -90,12 +88,9 @@ int main(int argc, char** argv) {
         ("case-sensitive","match case-sensitive",cxxopts::value<bool>(match::case_sensitive));
 
     options.add_options("1 start")
-        ("p,path", "start find from path", cxxopts::value<vs>(start::path))//
+        ("p,path", "start find from path", cxxopts::value<vs>(args.Path().paths))//
         ("set-default-path", "reset default-path(default form .)", cxxopts::value<std::string>(start::default_path))
         ("get-default-path", "get default-path");
-
-    //初始化数据
-    _path.setPath(std::move(start::path));
 
     // 解析命令行参数
     auto result = options.parse(argc,argv);

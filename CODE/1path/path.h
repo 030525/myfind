@@ -1,16 +1,13 @@
 #ifndef _path_h_
 #define _path_h_
 
-#include <vector>
-#include <string>
+#include "../args/PathData.h"
 
-class Path{
+class Path : private PathData{
 
 public:
-    Path(std::vector<std::string> && _path):paths(std::move(_path))
-    {
-
-    }
+    Path(PathData && _pathdata):PathData(std::move(_pathdata))
+    {}
 
 	std::vector<std::string> getPath()const;
 
@@ -18,10 +15,6 @@ public:
     {
         return default_path;
     }
-
-private:
-    std::vector<std::string> paths;
-    std::string default_path;
 };
 
 

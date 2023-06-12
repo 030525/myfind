@@ -1,7 +1,7 @@
 .PHNOY: clean out
 
 #获取code下目录
-srcDIRS :=  other find  output  rely/log rely/time 1path 0menu
+srcDIRS :=  other output  rely/log rely/time 1path 0menu args
 #rely/trie rely/time
 srcDIRS := $(addprefix CODE/,${srcDIRS})
 buildDIR := Build
