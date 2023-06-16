@@ -1,5 +1,6 @@
 #include "path.h"
 #include "../rely/time/time.h"
+
 std::vector<std::string> Path::getPath() const
 {
     std::vector<std::string> ret(paths);
