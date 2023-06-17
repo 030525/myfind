@@ -26,10 +26,6 @@ class FileType
 class MatchData
 {
 public:
-
-
-
-
     std::vector<std::string> getMatch()const
     {
         return std::move(match);
