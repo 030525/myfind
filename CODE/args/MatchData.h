@@ -1,64 +1,84 @@
 #ifndef _MatchData_h_
 #define _MatchData_h_
 
-#include <vector>
+#include <unordered_set>
 #include <string>
-
-enum class TYPE{
-    FILE = 1,
-    DIRECTORY = 2,
-    LINK = 4,
-    BLOCK = 8,
-    CHARACTER = 16,
-    SOCKETS =32,
-    ALL = FILE | DIRECTORY | LINK | BLOCK | CHARACTER | SOCKETS
-};
-
-class FileType
-{
-    void setType()
-
-    private:
-        TYPE _type;
-};
-
 
 class MatchData
 {
 public:
-    std::vector<std::string> getMatch()const
+    enum class TYPE{
+        NONE = 0,
+        FILE = 1,
+        DIRECTORY = 2,
+        LINK = 4,
+        BLOCK = 8,
+        CHARACTER = 16,
+        SOCKETS =32,
+        ALL = FILE | DIRECTORY | LINK | BLOCK | CHARACTER | SOCKETS
+    };
+
+    friend MatchData::TYPE operator | (const MatchData::TYPE & a,const MatchData::TYPE & b)
+    {
+        return static_cast<MatchData::TYPE>(static_cast<int>(a) | static_cast<int>(b));
+    }
+
+    TYPE getType()const
+    {
+        return type;
+    }
+
+public:
+    std::unordered_set<std::string> getMatch()const
     {
         return std::move(match);
     }
 
-    void setMatch(std::vector<std::string> && _match)
+    void setMatch(std::unordered_set<std::string> && _match)
     {
         match = std::move(_match);
     }
 
-    std::vector<std::string> getSkip()const
+    std::unordered_set<std::string> getSkip()const
     {
         return std::move(skip);
     }
 
-    void setSkip(std::vector<std::string> && _skip)
+    void setSkip(unordered_set<std::string> && _skip)
     {
         skip = std::move(_skip);
     }
 
+    void setType(TYPE _type)
+    {
+        type = _type;
+    }
 
+    TYPE getType()const
+    {
+        return type;
+    }
 
+    std::pair<int,int> getLimit()const
+    {
+        return {low_limit_size,up_limit_size};
+    }
 
 private:
-    std::vector<std::string> match;
+    std::unordered_set<std::string> match;
     
     //find_hidden可以放在skip里，那么默认就是全部查找
-    std::vector<std::string> skip;
+    std::unordered_set<std::string> skip;
 
+    //以kb为单位
+    //0kb-2048G
     int low_limit_size = -1;
     int up_limit_size = INT32_MAX;
 
+    TYPE type;
 };
+
+
 
 #endif
 

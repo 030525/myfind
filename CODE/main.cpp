@@ -1,5 +1,6 @@
 #include "rely/cxxopts/include/cxxopts.hpp"
 #include "rely/log/easylogging++.h"
+
 #include "args/argsManager.h"
 #include "0menu/menu.h"
 
