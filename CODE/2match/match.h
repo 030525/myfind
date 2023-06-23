@@ -4,17 +4,16 @@
 #include "../args/MatchData.h"
 #include <boost/filesystem.hpp>
 
-using namespace boost::filesystem;
+using bfp = boost::filesystem::path;
 
 class Match : private MatchData{
 
 public:
-	bool match(const boost::filesystem::path & path)
-    {
-        
-    }
+	bool match(const bfp & path);
 private:
-
+    bool matchNameSkip(const bfp & path);//比较文件名称
+    bool matchType(const bfp & path);//比较文件类型
+    bool matchPermission(const bfp & path);//比较文件权限
 };
 
 #endif

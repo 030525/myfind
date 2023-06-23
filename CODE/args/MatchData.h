@@ -23,28 +23,20 @@ public:
         return static_cast<MatchData::TYPE>(static_cast<int>(a) | static_cast<int>(b));
     }
 
-    TYPE getType()const
+    friend int operator & (const MatchData::TYPE & a,const MatchData::TYPE & b)
     {
-        return type;
+        return (static_cast<int>(a) & static_cast<int>(b));
     }
 
+
 public:
-    std::unordered_set<std::string> getMatch()const
-    {
-        return std::move(match);
-    }
 
     void setMatch(std::unordered_set<std::string> && _match)
     {
         match = std::move(_match);
     }
 
-    std::unordered_set<std::string> getSkip()const
-    {
-        return std::move(skip);
-    }
-
-    void setSkip(unordered_set<std::string> && _skip)
+    void setSkip(std::unordered_set<std::string> && _skip)
     {
         skip = std::move(_skip);
     }
@@ -54,17 +46,7 @@ public:
         type = _type;
     }
 
-    TYPE getType()const
-    {
-        return type;
-    }
-
-    std::pair<int,int> getLimit()const
-    {
-        return {low_limit_size,up_limit_size};
-    }
-
-private:
+protected:
     std::unordered_set<std::string> match;
     
     //find_hidden可以放在skip里，那么默认就是全部查找
