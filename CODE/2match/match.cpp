@@ -7,12 +7,8 @@ using mt = MatchData::TYPE;
 
 bool Match::match(const bfp &path)
 {
-    boost::asio::post(threads,[&flag](){
-        if(flag)
-        {
-            
-        }
-    });
+    t
+
 }
 
 bool Match::matchType(const bfp &path)
