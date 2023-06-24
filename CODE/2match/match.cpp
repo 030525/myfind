@@ -2,7 +2,18 @@
 
 using bfp =  boost::filesystem::path;
 using bff = boost::filesystem::file_type;
+using bfs = boost::filesystem::file_status;
 using mt = MatchData::TYPE;
+
+bool Match::match(const bfp &path)
+{
+    boost::asio::post(threads,[&flag](){
+        if(flag)
+        {
+            
+        }
+    });
+}
 
 bool Match::matchType(const bfp &path)
 {
@@ -24,27 +35,39 @@ bool Match::matchType(const bfp &path)
     return false;
 }
 
-bool Match::matchNameSkip(const bfp & path)
+bool Match::matchSize(const bfp &path)
+{
+    //默认匹配byte大小
+    uint64_t file_size = boost::filesystem::file_size(path);
+
+    return (file_size >= MatchData::low_limit_size) && (file_size <= MatchData::up_limit_size);
+    
+}
+
+bool Match::matchNameSkip(const bfp &path)
 {
     //获取文件名
     std::string real_name = path.filename().string();
 
-    //在name中匹配
-    auto iter = MatchData::match.find(real_name);
-
     //没找到则返回false
-    if(iter == MatchData::match.end()) return false;
-
-    //在skip中匹配
-    auto iter = MatchData::skip.find(real_name);
+    if(MatchData::match.find(real_name) == MatchData::match.end()) return false;
 
     //找到了返回flase
-    if(iter != MatchData::skip.end()) return false;
+    if(MatchData::skip.find(real_name) != MatchData::skip.end()) return false;
 
     return true;
 }
 
+//对于权限，分为绝对权限和相对权限
+//绝对权限，则根据owner，group，orther划分
+//相对权限，根据当前用户和文件的关系，
+//如当前用户对于a文件是owner，b文件是group，
+//那么就按照owner和group分别查找ab
+
+//目前不考虑
+/*
 bool Match::matchPermission(const bfp & path)
 {
-
+    return false;
 }
+*/

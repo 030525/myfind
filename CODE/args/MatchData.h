@@ -7,6 +7,10 @@
 class MatchData
 {
 public:
+    enum class PERMISSION{
+
+    };
+
     enum class TYPE{
         NONE = 0,
         FILE = 1,
@@ -54,8 +58,8 @@ protected:
 
     //以kb为单位
     //0kb-2048G
-    int low_limit_size = -1;
-    int up_limit_size = INT32_MAX;
+    uint64_t low_limit_size = 0;
+    uint64_t up_limit_size = UINT64_MAX;
 
     TYPE type;
 };
